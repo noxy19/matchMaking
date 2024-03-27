@@ -4,9 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY tsconfig*.json ./
+COPY nest-cli.json ./
 
 RUN npm install
 
-COPY ./src ./src
-
-CMD ["npm", "run", "start"]
