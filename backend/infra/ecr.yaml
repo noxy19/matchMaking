@@ -1,0 +1,25 @@
+Description: Create an ECR repository with a lifecycle policy.
+
+Resources:
+  MatchMakingEcr:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: match-making-repository
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {
+            "rules": [
+              {
+                "rulePriority": 1,
+                "description": "Keep only the last 5 images",
+                "selection": {
+                  "tagStatus": "any",
+                  "countType": "imageCountMoreThan",
+                  "countNumber": 5
+                },
+                "action": {
+                  "type": "expire"
+                }
+              }
+            ]
+          }
