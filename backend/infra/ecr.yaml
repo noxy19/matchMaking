@@ -29,7 +29,7 @@ Resources:
     Properties:
       UserName: PushToEcrUser
 
-  PushToEcrPolicy:
+  EcrAuthTokenPolicy:
     Type: AWS::IAM::Policy
     Properties:
       PolicyDocument:
@@ -38,6 +38,19 @@ Resources:
           - Effect: Allow
             Action: 
               - "ecr:GetAuthorizationToken"
+            Resource: "*"
+      PolicyName: EcrAuthTokenPolicy
+      Users: 
+      - !Ref PushToEcrUser
+
+  PushToEcrPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: 
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:InitiateLayerUpload"
               - "ecr:PutImage"
